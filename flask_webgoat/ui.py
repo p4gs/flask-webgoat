@@ -8,8 +8,7 @@ bp = Blueprint("ui", __name__)
 
 @bp.route("/search")
 def search():
-    query_param = request.args.get("query")
-    if query_param is None:
+    if (query_param := request.args.get("query")) is None:
         message = "please provide the query parameter"
         return render_template("error.html", message=message)
 
