@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 
 from flask import Blueprint, request, jsonify, session
+from security import safe_command
 
 bp = Blueprint("actions", __name__)
 
@@ -41,8 +42,7 @@ def log_entry():
 def grep_processes():
     name = request.args.get("name")
     # vulnerability: Remote Code Execution
-    res = subprocess.run(
-        ["ps aux | grep " + name + " | awk '{print $11}'"],
+    res = safe_command.run(subprocess.run, ["ps aux | grep " + name + " | awk '{print $11}'"],
         shell=True,
         capture_output=True,
     )
