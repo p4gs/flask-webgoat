@@ -43,8 +43,7 @@ def grep_processes():
     # vulnerability: Remote Code Execution
     res = subprocess.run(
         ["ps aux | grep " + name + " | awk '{print $11}'"],
-        shell=True,
-        capture_output=True,
+        shell=False, capture_output=True,
     )
     if res.stdout is None:
         return jsonify({"error": "no stdout returned"})
